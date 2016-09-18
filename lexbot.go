@@ -18,9 +18,10 @@ func main() {
     // Routes
     s.Post("/commit", controllers.GetWebhook)
 
-    // Lets run
-    s.Run(modules.CONFIG.Section("SERVER").Key("port").Int())
+    // Run webserver
+    s.Run()
 
+    // Run Discord bot
     err := modules.BOT.Open()
     if err != nil {
         fmt.Println("error opening connection", err)
