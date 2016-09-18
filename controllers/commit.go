@@ -7,6 +7,7 @@ import (
     "github.com/lexteam/lexbot/modules"
     "gopkg.in/macaron.v1"
     "strconv"
+    "strings"
 )
 
 func GetWebhook(ctx *macaron.Context) {
@@ -20,8 +21,10 @@ func GetWebhook(ctx *macaron.Context) {
             "[" + *res.Repo.Name + "] " + *res.Pusher.Name + " pushed " + strconv.Itoa(len(res.Commits)) + " commits to " + *res.Ref + " " + *res.Compare)
 
         for _, commit := range res.Commits {
+            message := strings.Split(*commit.Message, "\n")[0]
+
             modules.BOT.ChannelMessageSend(modules.CONFIG.Section("DISCORD").Key("channel").String(),
-                *res.Repo.Name + "/" + *res.Ref + " " + *commit.ID + ": " + *commit.Message + " (By " + *commit.Author.Name + ")")
+                *res.Repo.Name + "/" + *res.Ref + " " + *commit.ID + ": " + message + " (By " + *commit.Author.Name + ")")
         }
     }
 }
