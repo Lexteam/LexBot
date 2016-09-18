@@ -14,8 +14,7 @@ func InitBot() {
 
     BOT, err = discordgo.New(
         CONFIG.Section("DISCORD").Key("email").String(),
-        CONFIG.Section("DISCORD").Key("password").String(),
-        CONFIG.Section("DISCORD").Key("token").String())
+        CONFIG.Section("DISCORD").Key("password").String())
     if err != nil {
         fmt.Println("Error creating Discord session", err)
     }
